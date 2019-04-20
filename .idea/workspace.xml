@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e0f93e7d-e521-448c-bdc9-196220186fd6" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/GradeDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GradeDB.java" afterDir="false" />
-    </list>
+    <list default="true" id="e0f93e7d-e521-448c-bdc9-196220186fd6" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -138,16 +136,15 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1555802084572</updated>
-      <workItem from="1555802088754" duration="399000" />
+      <workItem from="1555802088754" duration="631000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="399000" />
+    <option name="totallyTimeSpent" value="631000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="Favorites" side_tool="true" />
       <window_info id="Designer" />
