@@ -1,6 +1,8 @@
 import  java.util.*;
 
 public class GradeDB {
-    // write
-    private String name;
+	GradeDB(String excell) {
+		System.out.println(excell);
+	}
+
 }
