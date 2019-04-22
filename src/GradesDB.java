@@ -1,13 +1,17 @@
+import java.io.File;
 import java.util.*;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 public class GradesDB {
+	private Workbook workbook;
+	
 	GradesDB(String excell) throws Exception {
-		//To do
+		workbook = WorkbookFactory.create(new File(excell));
 	}
 	
 	public int getNumStudents() {
-		//Dummy return
-				return 0;
+		return workbook.getSheet("StudentsInfo").getPhysicalNumberOfRows();
 	}
 	
 	public int getNumAssignments() {
