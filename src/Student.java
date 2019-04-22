@@ -1,5 +1,5 @@
 import java.util.*;
 
-public class student {
+public class Student {
     //Paris Write Code
 }
