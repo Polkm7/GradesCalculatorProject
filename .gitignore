@@ -26,6 +26,10 @@ hs_err_pid*
 *.project
 *.iml
 *.xml
+<<<<<<<<< Temporary merge branch 1
+*.idea
+=========
 *.idea
 out/
 /bin/
+>>>>>>>>> Temporary merge branch 2
