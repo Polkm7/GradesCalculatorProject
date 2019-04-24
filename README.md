@@ -12,4 +12,4 @@ test-driven development.
 * [Robert D. Rioja](https://github.com/miapuffia)
 * [Tanner Jones]()
 
-![alt text](JUnit Screenshot.png)
+![alt text](JUnit%20Screenshot.png)
