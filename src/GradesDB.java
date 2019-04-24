@@ -1,6 +1,5 @@
 import java.io.File;
-import java.util.*;
-
+import java.util.HashSet;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -10,12 +9,13 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 public class GradesDB {
 	private Workbook workbook;
 	
+	//Constructor sets Workbook class variable with passed String
 	GradesDB(String excell) throws Exception {
 		workbook = WorkbookFactory.create(new File(excell));
 	}
 	
-	public int getNumStudents()
-	{
+	public int getNumStudents() {
+		//Return the number of rows in the "StudentsInfo" sheet - 1 (the first row contains header information)
 		return workbook.getSheet("StudentsInfo").getPhysicalNumberOfRows() - 1;
 	}
 	
@@ -24,8 +24,10 @@ public class GradesDB {
 		
 		Sheet individualGradesSheet = workbook.getSheet("IndividualGrades");
 		
+		//The first row contains header information we'll use to determine the number of assignments
 		Row firstRow = individualGradesSheet.getRow(0);
 		
+		//Loop through cells of the first row and increment the counter if a cell contains "ASSIGNMENT" String
 		for(Cell cell : firstRow) {
 			if(cell.getStringCellValue().contains("ASSIGNMENT")) {
 				numAssignments++;
@@ -40,8 +42,10 @@ public class GradesDB {
 		
 		Sheet individualContribsSheet = workbook.getSheet("IndividualContribs");
 		
+		//The first row contains header information we'll use to determine the number of projects
 		Row firstRow = individualContribsSheet.getRow(0);
 		
+		//Loop through cells of the first row and increment the counter if a cell contains "PROJECT" String
 		for(Cell cell : firstRow) {
 			if(cell.getStringCellValue().contains("PROJECT")) {
 				numProjects++;
@@ -56,7 +60,7 @@ public class GradesDB {
 		
 		Sheet studentsInfoSheet = workbook.getSheet("StudentsInfo");
 		
-		//This row contains information about subsequent rows
+		//This row contains header information about subsequent rows
 		Row firstRow = studentsInfoSheet.getRow(0);
 		
 		//Use these to determine if cells in subsequent rows describe a name or ID
@@ -83,15 +87,13 @@ public class GradesDB {
 			for(Cell cell : studentsInfoSheet.getRow(i)) {
 				//Set the students name if that is the correct corresponding cell
 				if(cell.getColumnIndex() == nameCellIndex) {
-					//Requires complete Student class
-					//student.setName(cell.getStringCellValue());
+					student.setName(cell.getStringCellValue());
 					continue;
 				}
 				
 				//Set the students ID if that is the correct corresponding cell
 				if(cell.getColumnIndex() == idCellIndex) {
-					//Requires complete Student class
-					//student.setID(cell.getStringCellValue());
+					student.setId(Integer.toString((int) cell.getNumericCellValue()));
 					continue;
 				}
 			}
@@ -103,16 +105,18 @@ public class GradesDB {
 	}
 	
 	public Student getStudentByName(String name) {
+		Student student = new Student();
+		
 		Sheet studentsInfoSheet = workbook.getSheet("StudentsInfo");
 		
-		//This row contains information about subsequent rows
+		//This row contains header information about subsequent rows
 		Row firstRow = studentsInfoSheet.getRow(0);
 		
 		//Use these to determine if cells in subsequent rows describe a name or ID
 		int nameCellIndex = 0;
 		int idCellIndex = 0;
 		
-		//Loop through the first row and determine the index of cells with name data
+		//Loop through the first row and determine the index of cells with name and ID data
 		for(int i = 0; i < firstRow.getPhysicalNumberOfCells(); i++) {
 			switch(firstRow.getCell(i).getStringCellValue()) {
 				case "NAME":
@@ -126,16 +130,34 @@ public class GradesDB {
 		
 		//Loop through rows starting at row of index 1 to avoid the first row (used above)
 		for(int i = 1; i < studentsInfoSheet.getPhysicalNumberOfRows(); i++) {
+			//Set the student info if it is has the correct name
 			if(studentsInfoSheet.getRow(i).getCell(nameCellIndex).getStringCellValue().equals(name)) {
-				//Requires complete Student class
-				//return new Student(name, studentsInfoSheet.getRow(i).getCell(idCellIndex).getStringCellValue());
+				student.setName(name);
+				student.setId(Integer.toString((int) studentsInfoSheet.getRow(i).getCell(idCellIndex).getNumericCellValue()));
+				
+				break;
 			}
 		}
 		
-		return null;
+		//Now we get attendance data
+		
+		Sheet attendanceSheet = workbook.getSheet("Attendance");
+		
+		//Loop through rows starting at row of index 1 to avoid the first row (used above)
+		for(int i = 1; i < attendanceSheet.getPhysicalNumberOfRows(); i++) {
+			//Set the student attendance if it is has the correct name
+			if(attendanceSheet.getRow(i).getCell(0).getStringCellValue().equals(name)) {
+				student.setAttendance((int) attendanceSheet.getRow(i).getCell(1).getNumericCellValue());
+				break;
+			}
+		}
+		
+		return student;
 	}
 	
 	public Student getStudentByID(String id) {
+		Student student = new Student();
+		
 		Sheet studentsInfoSheet = workbook.getSheet("StudentsInfo");
 		
 		//This row contains information about subsequent rows
@@ -145,7 +167,7 @@ public class GradesDB {
 		int nameCellIndex = 0;
 		int idCellIndex = 0;
 		
-		//Loop through the first row and determine the index of cells with name data
+		//Loop through the first row and determine the index of cells with name and ID data
 		for(int i = 0; i < firstRow.getPhysicalNumberOfCells(); i++) {
 			switch(firstRow.getCell(i).getStringCellValue()) {
 				case "NAME":
@@ -159,12 +181,15 @@ public class GradesDB {
 		
 		//Loop through rows starting at row of index 1 to avoid the first row (used above)
 		for(int i = 1; i < studentsInfoSheet.getPhysicalNumberOfRows(); i++) {
-			if(studentsInfoSheet.getRow(i).getCell(idCellIndex).getStringCellValue().equals(id)) {
-				//Requires complete Student class
-				//return new Student(studentsInfoSheet.getRow(i).getCell(nameCellIndex).getStringCellValue(), id);
+			//Set the student info if it is has the correct name
+			if(Integer.valueOf(id) == (int) studentsInfoSheet.getRow(i).getCell(idCellIndex).getNumericCellValue()) {
+				student.setName(studentsInfoSheet.getRow(i).getCell(nameCellIndex).getStringCellValue());
+				student.setId(id);
+				
+				break;
 			}
 		}
 		
-		return null;
+		return student;
 	}
 }

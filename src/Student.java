@@ -2,56 +2,57 @@
  * Student Class
  * Usage: Create Student Object with the following attributes:
  *  Name
- *  ID
+ *  Id
  *  Email
  *  Attendance
  * */
 
-import java.util.*;
-
 public class Student {
-
     private String name;
-    private int id;
+    private String id;
     private String email;
     private int attendance;
 
     public String getName(){
         return name;
     }
+    
     public String setName(String newName){
         return this.name = newName;
     }
 
-    public int getID(){
+    public String getId(){
         return id;
     }
-    public int setID(int newID){
-        return this.id = newID;
+    
+    public String setId(String newId){
+        return this.id = newId;
     }
 
     public String getEmail(){
         return email;
     }
+    
     public String setEmail(String newEmail){
         return this.email=newEmail;
     }
 
-    public int getAttendence(){
+    public int getAttendance(){
         return attendance;
     }
-    public int setAttendence(int newAttendence){
-        return this.attendance = newAttendence;
+    
+    public int setAttendance(int newAttendance){
+        return this.attendance = newAttendance;
     }
 
     Student(){
 
     }
 
-    Student(String studentName,int studentID,String studentEmail,int studentAttendence){
+    Student(String studentName,String studentId,String studentEmail,int studentAttendence){
         this.name = studentName;
-        this.id = studentID;
-        this.email=studentEmail;
+        this.id = studentId;
+        this.email = studentEmail;
         this.attendance = studentAttendence;
     }
 }
