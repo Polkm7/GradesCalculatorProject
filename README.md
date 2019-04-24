@@ -12,5 +12,5 @@ test-driven development.
 * [Robert D. Rioja](https://github.com/miapuffia)
 * [Tanner Jones]()
 
-##Junit Screenshot
+## Junit Screenshot
 ![alt text](JUnit%20Screenshot.png "JUnit Screenshot")
