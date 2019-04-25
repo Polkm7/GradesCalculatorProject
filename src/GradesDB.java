@@ -97,8 +97,11 @@ public class GradesDB {
 					continue;
 				}
 			}
-			
-			studentsHashSet.add(student);
+			if(studentsHashSet.get(student) =! null) {
+				studentsHashSet.add(student);
+			} else {
+				System.out.println("Found duplicate entry" + student);
+			}
 		}
 		
 		return studentsHashSet;
@@ -184,9 +187,12 @@ public class GradesDB {
 			//Set the student info if it is has the correct name
 			if(Integer.valueOf(id) == (int) studentsInfoSheet.getRow(i).getCell(idCellIndex).getNumericCellValue()) {
 				student.setName(studentsInfoSheet.getRow(i).getCell(nameCellIndex).getStringCellValue());
-				student.setId(id);
-				
-				break;
+				if(student.getID != null) {
+					student.setId(id);
+				}else{
+					System.out.println("Duplicate ID found for " + student.getID());
+				}
+				//break;
 			}
 		}
 		
